@@ -1,6 +1,6 @@
 <?php
 
-// powershell -ExecutionPolicy Bypass -File "D:\xampp\htdocs\autobarcode\cron_job.ps1"
+// powershell -ExecutionPolicy Bypass -File "C:\xampp\htdocs\autobarcode\cron_job.ps1"
 
 date_default_timezone_set('Asia/Kolkata');
 

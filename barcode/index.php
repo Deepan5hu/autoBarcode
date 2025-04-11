@@ -108,10 +108,11 @@ $store_id = $_SESSION['store_id'];
                 <div class="form-group">
                     <label for="barcodeLifter">Scan Barcode:</label>
                     <input type="text" class="form-control" id="barcodeLifter" name="barcode"
-                        placeholder="Scan barcode here" required autofocus
+                        placeholder="Scan barcode here" required autofocus maxlength="19"
+                        oninput="this.value = this.value.toUpperCase()"
                         onkeypress="checkBarcodeInput(event, 'printForm')">
                 </div>
-                
+
             </form>
 
         </div>
@@ -143,8 +144,8 @@ $store_id = $_SESSION['store_id'];
 
             timeoutId = setTimeout(() => {
                 barcodeScanned = true;
-                barcodeValue = barcodeValue.trim();
-                barcodeValue = barcodeValue.replace(/Enter/g, '');
+                barcodeValue = barcodeValue.trim().replace(/Enter/g, '');;
+                barcodeValue = barcodeValue.substring(0, 19);
                 inputField.value = barcodeValue;
                 inputField.setAttribute('readonly', true);
                 barcodeValue = "";
@@ -167,6 +168,16 @@ $store_id = $_SESSION['store_id'];
                 echo "Swal.fire({
                 title: 'Error',
                 text: 'Failed to Print!',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false
+            }).then(function() {
+                window.location.href = 'index.php';
+            });";
+            } elseif ($_GET['status'] == 'duplicate') {
+                echo "Swal.fire({
+                title: 'Error',
+                text: 'Barcode already printed! Within Last 48 Hours.',
                 icon: 'error',
                 timer: 1000,
                 showConfirmButton: false
