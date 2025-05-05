@@ -71,6 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ^XZ";
 
         // Send the ZPL to the printer
+        
+        // for ($i = 0; $i < 2; $i++) {
+        //     sendToPrinter('TSC TTP-345', $zpl);
+        // }
+
         sendToPrinter('TSC TTP-345', $zpl);
 
     }
