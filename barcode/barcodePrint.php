@@ -11,13 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $barcode = $_POST['barcode'];
 
     $stage = 'Delhi';
+    $line = 'A';
 
     $sql_check = "SELECT COUNT(*) AS count FROM autoprinted_barcodes 
-              WHERE barcode = ? 
+              WHERE barcode = ?
+              AND stage = ?
+              AND line = ? 
               AND CONCAT(date, ' ', time) >= NOW() - INTERVAL 48 HOUR";
 
     $stmt = $conn->prepare($sql_check);
-    $stmt->bind_param("s", $barcode);
+    $stmt->bind_param("sss", $barcode, $stage, $line);
     $stmt->execute();
     $stmt->bind_result($count);
     $stmt->fetch();
@@ -71,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ^XZ";
 
         // Send the ZPL to the printer
-        
+
         // for ($i = 0; $i < 2; $i++) {
         //     sendToPrinter('TSC TTP-345', $zpl);
         // }
@@ -82,9 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($printStatus == 'true') {
 
-        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, line, store_id) VALUES (?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $barcode, $stage, $store_id);
+        $stmt->bind_param("ssss", $barcode, $stage, $line, $store_id);
         $stmt->execute();
 
         $stmt->close();

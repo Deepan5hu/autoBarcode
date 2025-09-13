@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $barcode = $_POST['barcode'];
 
-    $stage = 'Stage Name';
+    $stage = 'Delhi';
+    $line = 'A';
 
     // Function to send data to the printer by writing ZPL to a file and then sending the file to the printer
     function sendToPrinter($printerName, $zpl)
@@ -63,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($printStatus == 'true') {
 
-        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, line, store_id) VALUES (?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $barcode, $stage, $store_id);
+        $stmt->bind_param("ssss", $barcode, $stage, $line, $store_id);
         $stmt->execute();
 
         $stmt->close();
