@@ -10,9 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $barcode = $_POST['barcode'];
 
-    $stage = 'Stage Name';
+    $stage = 'Delhi';
 
-    $sql_check = "SELECT COUNT(*) AS count FROM printed_barcodes 
+    $sql_check = "SELECT COUNT(*) AS count FROM autoprinted_barcodes 
               WHERE barcode = ? 
               AND CONCAT(date, ' ', time) >= NOW() - INTERVAL 48 HOUR";
 
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($printStatus == 'true') {
 
-        $sql = "INSERT INTO printed_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $barcode, $stage, $store_id);
         $stmt->execute();

@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($printStatus == 'true') {
 
-        $sql = "INSERT INTO printed_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
+        $sql = "INSERT INTO autoprinted_barcodes (barcode, stage, store_id) VALUES (?,?,?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $barcode, $stage, $store_id);
         $stmt->execute();
